@@ -6,7 +6,7 @@ import (
 )
 
 func GetAllArticle(db *sql.DB) (err error, results []structs.Article) {
-	sql := "SELECT id, title, sub_title, is_at_home, created_at, updated_at FROM articles"
+	sql := "SELECT * FROM articles"
 
 	rows, err := db.Query(sql)
 	if err != nil {
@@ -18,7 +18,7 @@ func GetAllArticle(db *sql.DB) (err error, results []structs.Article) {
 	for rows.Next() {
 		var article = structs.Article{}
 
-		err = rows.Scan(&article.Id, &article.Title, &article.SubTitle, &article.IsAtHome, &article.CreatedAt, &article.UpdatedAt)
+		err = rows.Scan(&article.Id, &article.Title, &article.SubTitle, &article.Content, &article.IsAtHome, &article.CreatedAt, &article.UpdatedAt)
 		if err != nil {
 			panic(err)
 		}
