@@ -50,3 +50,20 @@ func InsertOrder(c *gin.Context) {
 		"result": "Success Insert Order",
 	})
 }
+
+func GetAllOrder(c *gin.Context) {
+	var result gin.H
+
+	orders, err := repository.GetAllOrder(database.DbConnection)
+
+	if err != nil {
+		result = gin.H{
+			"result": err,
+		}
+	} else {
+		result = gin.H{
+			"result": orders,
+		}
+	}
+	c.JSON(http.StatusOK, result)
+}

@@ -25,3 +25,25 @@ func InsertOrder(db *sql.DB, order structs.Order) (err error) {
 
 	return errs.Err()
 }
+
+func GetAllOrder(db *sql.DB) (err error, results []structs.Order) {
+	sql := "SELECT * FROM orders"
+
+	rows, err := db.Query(sql)
+	if err != nil {
+		panic(err)
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		var order = structs.Order{}
+
+		err = rows.Scan(&order.Id, &order.Uuid, &order.Status, &order.Total, &order.CreatedAt, &order.UpdatedAt, &order.UserId)
+		if err != nil {
+			panic(err)
+		}
+		results = append(results, order)
+	}
+	return
+}
