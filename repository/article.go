@@ -49,19 +49,19 @@ func GetArticleById(db *sql.DB, article structs.Article) (err error, results []s
 	return
 }
 
-func InsertArticle(db *sql.DB, articles structs.Article) (err error) {
+func InsertArticle(db *sql.DB, article structs.Article) (err error) {
 	sql := "INSERT INTO articles (title, sub_title, content, is_at_home)" +
 		" VALUES ($1, $2, $3, $4)"
 
-	errs := db.QueryRow(sql, articles.Title, articles.SubTitle, articles.Content, articles.IsAtHome)
+	errs := db.QueryRow(sql, article.Title, article.SubTitle, article.Content, article.IsAtHome)
 
 	return errs.Err()
 }
 
-func UpdateArticle(db *sql.DB, articles structs.Article) (err error) {
+func UpdateArticle(db *sql.DB, article structs.Article) (err error) {
 	sql := "UPDATE articles SET title = $1, sub_title = $2, content = $3, is_at_home = $4, updated_at = $5 WHERE id = $6"
 
-	errs := db.QueryRow(sql, articles.Title, articles.SubTitle, articles.Content, articles.IsAtHome, articles.UpdatedAt, articles.Id)
+	errs := db.QueryRow(sql, article.Title, article.SubTitle, article.Content, article.IsAtHome, article.UpdatedAt, article.Id)
 
 	return errs.Err()
 }
