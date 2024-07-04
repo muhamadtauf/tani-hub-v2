@@ -3,6 +3,7 @@
 
 CREATE TABLE orders (
     id SERIAL PRIMARY KEY,
+    uuid VARCHAR(256) UNIQUE NOT NULL,
     status VARCHAR(256) NOT NULL,
     total DECIMAL NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
