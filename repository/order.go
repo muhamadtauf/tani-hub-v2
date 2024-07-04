@@ -47,3 +47,25 @@ func GetAllOrder(db *sql.DB) (err error, results []structs.Order) {
 	}
 	return
 }
+
+func GetOrderByUuid(db *sql.DB, order structs.Order) (err error, results []structs.Order) {
+	sql := "SELECT * FROM orders WHERE uuid = $1"
+	//sql := "SELECT * FROM orders INNER JOIN order_details ON orders.uuid = order_details.order_uuid WHERE uuid = $1"
+	rows, err := db.Query(sql, order.Uuid)
+	if err != nil {
+		panic(err)
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		var order = structs.Order{}
+
+		err = rows.Scan(&order.Id, &order.Uuid, &order.Status, &order.Total, &order.CreatedAt, &order.UpdatedAt, &order.UserId)
+		if err != nil {
+			panic(err)
+		}
+		results = append(results, order)
+	}
+	return
+}

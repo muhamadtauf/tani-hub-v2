@@ -72,6 +72,7 @@ func main() {
 	//order
 	router.POST("/api/order", controller.InsertOrder)
 	router.GET("/api/order", controller.GetAllOrder)
+	router.GET("/api/order/:uuid", controller.GetOrderByUuid)
 
 	errRun := router.Run(":" + portApp)
 	if errRun != nil {

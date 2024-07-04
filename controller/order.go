@@ -67,3 +67,25 @@ func GetAllOrder(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, result)
 }
+
+func GetOrderByUuid(c *gin.Context) {
+	var order structs.Order
+	uuid := c.Param("uuid")
+
+	order.Uuid = uuid
+
+	var result gin.H
+
+	orders, err := repository.GetOrderByUuid(database.DbConnection, order)
+
+	if err != nil {
+		result = gin.H{
+			"result": err,
+		}
+	} else {
+		result = gin.H{
+			"result": orders,
+		}
+	}
+	c.JSON(http.StatusOK, result)
+}
