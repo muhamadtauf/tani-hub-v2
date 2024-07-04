@@ -62,6 +62,13 @@ func main() {
 	router.PUT("/api/category/:id", controller.UpdateCategory)
 	router.DELETE("/api/category/:id", controller.DeleteCategory)
 
+	//category
+	router.GET("/api/product", controller.GetAllProduct)
+	router.GET("/api/product/:id", controller.GetProductById)
+	router.POST("/api/product", controller.InsertProduct)
+	router.PUT("/api/product/:id", controller.UpdateProduct)
+	router.DELETE("/api/product/:id", controller.DeleteProduct)
+
 	errRun := router.Run(":" + portApp)
 	if errRun != nil {
 		log.Fatalf("Failed to run server: %v", err)
