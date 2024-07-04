@@ -49,7 +49,7 @@ func GetArticleById(c *gin.Context) {
 	c.JSON(http.StatusOK, result)
 }
 
-func InsertArtcile(c *gin.Context) {
+func InsertArticle(c *gin.Context) {
 	var article structs.Article
 
 	err := c.ShouldBindJSON(&article)

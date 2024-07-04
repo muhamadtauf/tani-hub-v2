@@ -51,7 +51,7 @@ func main() {
 	//article
 	router.GET("/api/article", controller.GetAllArticle)
 	router.GET("/api/article/:id", controller.GetArticleById)
-	router.POST("/api/article", controller.InsertArtcile)
+	router.POST("/api/article", controller.InsertArticle)
 	router.PUT("/api/article/:id", controller.UpdateArticle)
 	router.DELETE("/api/article/:id", controller.DeleteArticle)
 
