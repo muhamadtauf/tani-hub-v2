@@ -19,7 +19,7 @@ func InsertOrder(c *gin.Context) {
 	}
 
 	Uuid := uuid.New()
-	order.Uuid = Uuid.String()
+	order.Code = Uuid.String()
 
 	var Total float64
 	for index, orderDetail := range order.OrderDetail {
@@ -34,7 +34,7 @@ func InsertOrder(c *gin.Context) {
 
 		order.OrderDetail[index].Price = products[0].Price
 		order.OrderDetail[index].Total = order.OrderDetail[index].Price * float64(orderDetail.Quantity)
-		order.OrderDetail[index].OrderUuid = Uuid.String()
+		order.OrderDetail[index].OrderCode = Uuid.String()
 		Total += order.OrderDetail[index].Total
 	}
 
@@ -68,15 +68,15 @@ func GetAllOrder(c *gin.Context) {
 	c.JSON(http.StatusOK, result)
 }
 
-func GetOrderByUuid(c *gin.Context) {
+func GetOrderByCode(c *gin.Context) {
 	var order structs.Order
 	uuid := c.Param("uuid")
 
-	order.Uuid = uuid
+	order.Code = uuid
 
 	var result gin.H
 
-	orders, err := repository.GetOrderByUuid(database.DbConnection, order)
+	orders, err := repository.GetOrderByCode(database.DbConnection, order)
 
 	if err != nil {
 		result = gin.H{

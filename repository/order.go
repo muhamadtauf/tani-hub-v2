@@ -6,16 +6,16 @@ import (
 )
 
 func InsertOrder(db *sql.DB, order structs.Order) (err error) {
-	sql := "INSERT INTO orders (uuid, status, total, user_id)" +
+	sql := "INSERT INTO orders (code, status, total, user_id)" +
 		" VALUES ($1, $2, $3, $4)"
 
-	errs := db.QueryRow(sql, order.Uuid, order.Status, order.Total, order.UserId)
+	errs := db.QueryRow(sql, order.Code, order.Status, order.Total, order.UserId)
 
 	for _, orderDetail := range order.OrderDetail {
-		sql := "INSERT INTO order_details (price, quantity, total, product_id, order_uuid)" +
+		sql := "INSERT INTO order_details (price, quantity, total, product_id, order_code)" +
 			" VALUES ($1, $2, $3, $4, $5)"
 
-		db.QueryRow(sql, orderDetail.Price, orderDetail.Quantity, orderDetail.Total, orderDetail.ProductId, orderDetail.OrderUuid)
+		db.QueryRow(sql, orderDetail.Price, orderDetail.Quantity, orderDetail.Total, orderDetail.ProductId, orderDetail.OrderCode)
 
 		//return errs.Err()
 		//if errs != nil {
@@ -39,7 +39,7 @@ func GetAllOrder(db *sql.DB) (err error, results []structs.Order) {
 	for rows.Next() {
 		var order = structs.Order{}
 
-		err = rows.Scan(&order.Id, &order.Uuid, &order.Status, &order.Total, &order.CreatedAt, &order.UpdatedAt, &order.UserId)
+		err = rows.Scan(&order.Id, &order.Code, &order.Status, &order.Total, &order.CreatedAt, &order.UpdatedAt, &order.UserId)
 		if err != nil {
 			panic(err)
 		}
@@ -48,10 +48,10 @@ func GetAllOrder(db *sql.DB) (err error, results []structs.Order) {
 	return
 }
 
-func GetOrderByUuid(db *sql.DB, order structs.Order) (err error, results []structs.Order) {
-	sql := "SELECT * FROM orders WHERE uuid = $1"
+func GetOrderByCode(db *sql.DB, order structs.Order) (err error, results []structs.Order) {
+	sql := "SELECT * FROM orders WHERE order_code = $1"
 	//sql := "SELECT * FROM orders INNER JOIN order_details ON orders.uuid = order_details.order_uuid WHERE uuid = $1"
-	rows, err := db.Query(sql, order.Uuid)
+	rows, err := db.Query(sql, order.Code)
 	if err != nil {
 		panic(err)
 	}
@@ -61,7 +61,7 @@ func GetOrderByUuid(db *sql.DB, order structs.Order) (err error, results []struc
 	for rows.Next() {
 		var order = structs.Order{}
 
-		err = rows.Scan(&order.Id, &order.Uuid, &order.Status, &order.Total, &order.CreatedAt, &order.UpdatedAt, &order.UserId)
+		err = rows.Scan(&order.Id, &order.Code, &order.Status, &order.Total, &order.CreatedAt, &order.UpdatedAt, &order.UserId)
 		if err != nil {
 			panic(err)
 		}

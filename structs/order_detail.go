@@ -8,7 +8,7 @@ type OrderDetail struct {
 	Quantity  int64     `json:"quantity"`
 	Total     float64   `json:"total"`
 	ProductId int64     `json:"product_id"`
-	OrderUuid string    `json:"order_uuid"`
+	OrderCode string    `json:"order_code"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }

@@ -4,7 +4,7 @@ import "time"
 
 type Order struct {
 	Id          int64         `json:"id"`
-	Uuid        string        `json:"uuid"`
+	Code        string        `json:"code"`
 	Status      string        `json:"status"`
 	Total       float64       `json:"total"`
 	UserId      int64         `json:"user_id"`
