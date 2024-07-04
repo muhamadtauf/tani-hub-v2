@@ -9,6 +9,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"tani-hub-v2/controller"
 	"tani-hub-v2/database"
 )
 
@@ -46,6 +47,13 @@ func main() {
 
 	//router
 	router := gin.Default()
+
+	//article
+	router.GET("/api/article", controller.GetAllArticle)
+	router.GET("/api/article/:id", controller.GetArticleById)
+	router.POST("/api/article", controller.InsertArtcile)
+	router.PUT("/api/article/:id", controller.UpdateArticle)
+	router.DELETE("/api/article/:id", controller.DeleteArticle)
 
 	errRun := router.Run(":" + portApp)
 	if errRun != nil {
