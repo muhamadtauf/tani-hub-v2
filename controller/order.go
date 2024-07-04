@@ -70,7 +70,7 @@ func GetAllOrder(c *gin.Context) {
 
 func GetOrderByCode(c *gin.Context) {
 	var order structs.Order
-	uuid := c.Param("uuid")
+	uuid := c.Param("code")
 
 	order.Code = uuid
 
