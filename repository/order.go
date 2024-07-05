@@ -60,7 +60,7 @@ func GetAllOrder(db *sql.DB) (err error, results []structs.Order) {
 }
 
 func GetOrderByCode(db *sql.DB, order structs.Order) (err error, results []structs.Order) {
-	sql := "SELECT * FROM orders WHERE order_code = $1"
+	sql := "SELECT * FROM orders WHERE code = $1"
 	//sql := "SELECT * FROM orders INNER JOIN order_details ON orders.uuid = order_details.order_uuid WHERE uuid = $1"
 	rows, err := db.Query(sql, order.Code)
 	if err != nil {
