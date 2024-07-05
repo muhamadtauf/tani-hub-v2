@@ -12,6 +12,17 @@ func InsertOrder(db *sql.DB, order structs.Order) (err error) {
 	errs := db.QueryRow(sql, order.Code, order.Status, order.Total, order.UserId)
 
 	for _, orderDetail := range order.OrderDetail {
+		sql := "UPDATE products SET stock = stock - $1 WHERE id = $2"
+
+		db.QueryRow(sql, orderDetail.Quantity, orderDetail.ProductId)
+
+		//return errs.Err()
+		//if errs != nil {
+		//	panic(errs)
+		//}
+	}
+
+	for _, orderDetail := range order.OrderDetail {
 		sql := "INSERT INTO order_details (price, quantity, total, product_id, order_code)" +
 			" VALUES ($1, $2, $3, $4, $5)"
 
