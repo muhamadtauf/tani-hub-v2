@@ -80,3 +80,11 @@ func GetOrderByCode(db *sql.DB, order structs.Order) (err error, results []struc
 	}
 	return
 }
+
+func UpdateOrderStatus(db *sql.DB, order structs.Order) (err error) {
+	sql := "UPDATE orders SET status = $1 WHERE id = $2"
+
+	errs := db.QueryRow(sql, order.Status, order.Id)
+
+	return errs.Err()
+}

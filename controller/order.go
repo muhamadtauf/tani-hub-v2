@@ -4,10 +4,12 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"net/http"
+	"strconv"
 	"tani-hub-v2/constant"
 	"tani-hub-v2/database"
 	"tani-hub-v2/repository"
 	"tani-hub-v2/structs"
+	"time"
 )
 
 func InsertOrder(c *gin.Context) {
@@ -88,4 +90,64 @@ func GetOrderByCode(c *gin.Context) {
 		}
 	}
 	c.JSON(http.StatusOK, result)
+}
+
+func UpdateOrderToProcessed(c *gin.Context) {
+	var order structs.Order
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	order.Id = int64(id)
+	order.Status = constant.PROCESSED
+	order.UpdatedAt = time.Now()
+
+	err := repository.UpdateOrderStatus(database.DbConnection, order)
+
+	if err != nil {
+		panic(err)
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"result": "Success Update Order",
+	})
+
+}
+
+func UpdateOrderToShipped(c *gin.Context) {
+	var order structs.Order
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	order.Id = int64(id)
+	order.Status = constant.SHIPPED
+	order.UpdatedAt = time.Now()
+
+	err := repository.UpdateOrderStatus(database.DbConnection, order)
+
+	if err != nil {
+		panic(err)
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"result": "Success Update Order",
+	})
+
+}
+
+func UpdateOrderToFinished(c *gin.Context) {
+	var order structs.Order
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	order.Id = int64(id)
+	order.Status = constant.FINISHED
+	order.UpdatedAt = time.Now()
+
+	err := repository.UpdateOrderStatus(database.DbConnection, order)
+
+	if err != nil {
+		panic(err)
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"result": "Success Update Order",
+	})
+
 }
