@@ -6,6 +6,7 @@ CREATE TABLE orders (
     code VARCHAR(256) UNIQUE NOT NULL,
     status VARCHAR(256) NOT NULL,
     total DECIMAL NOT NULL,
+    address TEXT NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
     user_id BIGINT NOT NULL,

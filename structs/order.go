@@ -8,6 +8,7 @@ type Order struct {
 	Status      string        `json:"status"`
 	Total       float64       `json:"total"`
 	UserId      int64         `json:"user_id"`
+	Address     string        `json:"address"`
 	CreatedAt   time.Time     `json:"created_at"`
 	UpdatedAt   time.Time     `json:"updated_at"`
 	OrderDetail []OrderDetail `json:"order_detail"`

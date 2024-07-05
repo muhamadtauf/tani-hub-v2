@@ -6,10 +6,10 @@ import (
 )
 
 func InsertOrder(db *sql.DB, order structs.Order) (err error) {
-	sql := "INSERT INTO orders (code, status, total, user_id)" +
-		" VALUES ($1, $2, $3, $4)"
+	sql := "INSERT INTO orders (code, status, total, user_id, address)" +
+		" VALUES ($1, $2, $3, $4, $5)"
 
-	errs := db.QueryRow(sql, order.Code, order.Status, order.Total, order.UserId)
+	errs := db.QueryRow(sql, order.Code, order.Status, order.Total, order.UserId, order.Address)
 
 	for _, orderDetail := range order.OrderDetail {
 		sql := "UPDATE products SET stock = stock - $1 WHERE id = $2"
@@ -50,7 +50,7 @@ func GetAllOrder(db *sql.DB) (err error, results []structs.Order) {
 	for rows.Next() {
 		var order = structs.Order{}
 
-		err = rows.Scan(&order.Id, &order.Code, &order.Status, &order.Total, &order.CreatedAt, &order.UpdatedAt, &order.UserId)
+		err = rows.Scan(&order.Id, &order.Code, &order.Status, &order.Total, &order.Address, &order.CreatedAt, &order.UpdatedAt, &order.UserId)
 		if err != nil {
 			panic(err)
 		}
@@ -72,7 +72,7 @@ func GetOrderByCode(db *sql.DB, order structs.Order) (err error, results []struc
 	for rows.Next() {
 		var order = structs.Order{}
 
-		err = rows.Scan(&order.Id, &order.Code, &order.Status, &order.Total, &order.CreatedAt, &order.UpdatedAt, &order.UserId)
+		err = rows.Scan(&order.Id, &order.Code, &order.Status, &order.Total, &order.Address, &order.CreatedAt, &order.UpdatedAt, &order.UserId)
 		if err != nil {
 			panic(err)
 		}
@@ -101,7 +101,7 @@ func GetOrderByUserId(db *sql.DB, order structs.Order) (err error, results []str
 	for rows.Next() {
 		var order = structs.Order{}
 
-		err = rows.Scan(&order.Id, &order.Code, &order.Status, &order.Total, &order.CreatedAt, &order.UpdatedAt, &order.UserId)
+		err = rows.Scan(&order.Id, &order.Code, &order.Status, &order.Total, &order.Address, &order.CreatedAt, &order.UpdatedAt, &order.UserId)
 		if err != nil {
 			panic(err)
 		}
