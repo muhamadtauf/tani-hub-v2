@@ -133,8 +133,8 @@ func Login(c *gin.Context) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"sub":  user.Id,
 		"role": user.Role,
-		//"exp": time.Now().Add(time.Hour * 24 * 30).Unix(),
-		"exp": time.Now().Add(time.Minute * 1).Unix(),
+		"exp":  time.Now().Add(time.Hour * 24 * 30).Unix(),
+		//"exp": time.Now().Add(time.Minute * 1).Unix(),
 	})
 
 	tokenString, err := token.SignedString([]byte(os.Getenv("SECRET")))
@@ -147,8 +147,8 @@ func Login(c *gin.Context) {
 	}
 
 	c.SetSameSite(http.SameSiteLaxMode)
-	//c.SetCookie("Authorization", tokenString, 3600*24*30, "", "", false, true)
-	c.SetCookie("Authorization", tokenString, 3600*24, "", "", false, true)
+	c.SetCookie("Authorization", tokenString, 3600*24*30, "", "", false, true)
+	//c.SetCookie("Authorization", tokenString, 3600*24, "", "", false, true)
 	c.JSON(http.StatusOK, gin.H{
 		"result": "Success Login User",
 	})
