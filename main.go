@@ -76,6 +76,7 @@ func main() {
 	router.PUT("/api/order/processed/:id", controller.UpdateOrderToProcessed)
 	router.PUT("/api/order/shipped/:id", controller.UpdateOrderToShipped)
 	router.PUT("/api/order/finished/:id", controller.UpdateOrderToFinished)
+	router.GET("/api/order/user/:user_id", controller.GetOrderByUserId)
 
 	errRun := router.Run(":" + portApp)
 	if errRun != nil {

@@ -88,3 +88,24 @@ func UpdateOrderStatus(db *sql.DB, order structs.Order) (err error) {
 
 	return errs.Err()
 }
+
+func GetOrderByUserId(db *sql.DB, order structs.Order) (err error, results []structs.Order) {
+	sql := "SELECT * FROM orders WHERE user_id = $1"
+	rows, err := db.Query(sql, order.UserId)
+	if err != nil {
+		panic(err)
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		var order = structs.Order{}
+
+		err = rows.Scan(&order.Id, &order.Code, &order.Status, &order.Total, &order.CreatedAt, &order.UpdatedAt, &order.UserId)
+		if err != nil {
+			panic(err)
+		}
+		results = append(results, order)
+	}
+	return
+}

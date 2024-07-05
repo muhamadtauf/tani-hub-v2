@@ -151,3 +151,25 @@ func UpdateOrderToFinished(c *gin.Context) {
 	})
 
 }
+
+func GetOrderByUserId(c *gin.Context) {
+	var order structs.Order
+	userId, _ := strconv.Atoi(c.Param("user_id"))
+
+	order.UserId = int64(userId)
+
+	var result gin.H
+
+	orders, err := repository.GetOrderByUserId(database.DbConnection, order)
+
+	if err != nil {
+		result = gin.H{
+			"result": err,
+		}
+	} else {
+		result = gin.H{
+			"result": orders,
+		}
+	}
+	c.JSON(http.StatusOK, result)
+}
